@@ -1,8 +1,9 @@
 from django.shortcuts import render
+from django.db import transaction
 from django.db.models import Q, F, Value, Func, Count, Max, Min, Avg, Sum, ExpressionWrapper, DecimalField
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
-from store.models import Product, Order, Customer
+from store.models import Product, Order, OrderItem, Customer
 from tags.models import TaggedItem
 
 # Create your views here.
@@ -37,9 +38,25 @@ def say_hello(request):
         #     discounted_price=discounted_price
         # )
 
-        tagged_item = TaggedItem.objects.get_tags_for(Product, 1)
+        # with transaction.atomic():
+        #     order = Order()
+        #     order.customer_id = 1
+        #     order.save()
+
+        #     item = OrderItem()
+        #     item.order = order
+        #     item.product_id = 1
+        #     item.quantity = 1
+        #     item.unit_price = 10
+        #     item.save()
+
+        queryset = Product.objects.raw('SELECT * FROM store_product')
+        print(type(list(queryset)))
 
     except ObjectDoesNotExist:
         pass
 
-    return render(request, 'hello.html', {'item': list(tagged_item)})
+    return render(request, 'hello.html', {
+        'item': 'letsgo',
+        'products': list(queryset)
+    })
