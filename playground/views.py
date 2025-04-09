@@ -3,6 +3,7 @@ from django.db.models import Q, F, Value, Func, Count, Max, Min, Avg, Sum, Expre
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from store.models import Product, Order, Customer
+from tags.models import TaggedItem
 
 # Create your views here.
 def say_hello(request):
@@ -27,16 +28,18 @@ def say_hello(request):
         #     full_name=Concat('first_name', Value(' '), 'last_name')
         # )
 
-        discounted_price = ExpressionWrapper(
-            F('unit_price') * Value(0.8),
-            output_field=DecimalField()
-        )
+        # discounted_price = ExpressionWrapper(
+        #     F('unit_price') * Value(0.8),
+        #     output_field=DecimalField()
+        # )
 
-        queryset = Product.objects.annotate(
-            discounted_price=discounted_price
-        )
+        # queryset = Product.objects.annotate(
+        #     discounted_price=discounted_price
+        # )
+
+        tagged_item = TaggedItem.objects.get_tags_for(Product, 1)
 
     except ObjectDoesNotExist:
         pass
 
-    return render(request, 'hello.html', { 'products': list(queryset) })
+    return render(request, 'hello.html', {'item': list(tagged_item)})

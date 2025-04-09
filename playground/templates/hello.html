@@ -1,13 +1,7 @@
 <html>
     <body>
         <ul>
-            {% for product in products %}
-              <li>
-                <strong>{{ product.title }}</strong><br>
-                Original Price: ${{ product.unit_price }}<br>
-                Discounted Price: ${{ product.discounted_price }}
-              </li>
-            {% endfor %}
+            {{ item }}
         </ul>
     </body>
 </html>
