@@ -6,6 +6,7 @@ class Promotion(models.Model):
     description = models.CharField(max_length=255)
     discount = models.FloatField()
 
+
 class Collection(models.Model):
     title = models.CharField(max_length=255)
     featured_product = models.ForeignKey(
@@ -16,6 +17,7 @@ class Collection(models.Model):
 
     class Meta:
         ordering = ['title']
+
 
 class Product(models.Model):
     title = models.CharField(max_length=255)
@@ -35,6 +37,7 @@ class Product(models.Model):
 
     class Meta:
         ordering = ['title']
+
 
 class Customer(models.Model):
     MEMBERSHIP_BRONZE = 'B'
@@ -60,6 +63,7 @@ class Customer(models.Model):
     class Meta:
         ordering = ['first_name', 'last_name']
 
+
 class Order(models.Model):
     PAYMENT_STATUS_PENDING = 'P'
     PAYMENT_STATUS_COMPLETE = 'C'
@@ -75,11 +79,13 @@ class Order(models.Model):
         max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
 
+
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.PROTECT)
     product = models.ForeignKey(Product, on_delete=models.PROTECT, related_name='orderitems')
     quantity = models.PositiveSmallIntegerField()
     unit_price = models.DecimalField(max_digits=6, decimal_places=2)
+
 
 class Address(models.Model):
     street = models.CharField(max_length=255)
@@ -87,8 +93,10 @@ class Address(models.Model):
     customer = models.ForeignKey(
         Customer, on_delete=models.CASCADE)
 
+
 class Cart(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
+
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
