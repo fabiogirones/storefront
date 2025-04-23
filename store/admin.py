@@ -78,8 +78,7 @@ class CollectionAdmin(admin.ModelAdmin):
 
 @admin.register(models.Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    autocomplete_fields = ['user']
-    list_display = ['user__first_name', 'user__last_name',  'membership', 'orders']
+    list_display = ['first_name', 'last_name',  'membership', 'orders']
     list_editable = ['membership']
     list_per_page = 10
     list_select_related = ['user']

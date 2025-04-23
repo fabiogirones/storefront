@@ -44,9 +44,9 @@ INSTALLED_APPS = [
     'playground',
     'debug_toolbar',
     'store',
-    'core',
     'tags',
-    'likes'
+    'likes',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -102,6 +102,7 @@ DATABASES = {
 }
 
 
+
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -147,23 +148,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'COERCE_DECIMAL_TO_STRING': False,
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
 
-SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('JWT',),
-   'ACCESS_TOKEN_LIFETIME': timedelta(days=1)
-}
+AUTH_USER_MODEL = 'core.User'
 
 DJOSER = {
     'SERIALIZERS': {
         'user_create': 'core.serializers.UserCreateSerializer',
-        'current_user': 'core.serializers.UserSerializer'
+        'current_user': 'core.serializers.UserSerializer',
     }
 }
 
-AUTH_USER_MODEL = 'core.User'
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1)
+}
